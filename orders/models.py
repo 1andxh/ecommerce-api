@@ -19,7 +19,7 @@ class Order(models.Model):
     order_number = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.Choices(choices=StatusChoices.choices, default=StatusChoices.PENDING)
+    status = models.CharField(choices=StatusChoices.choices, default=StatusChoices.PENDING)
     products = models.ManyToManyField(Product, through="OrderItem", related_name='orders')
 
 
