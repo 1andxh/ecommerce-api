@@ -3,6 +3,8 @@ from orders.models import Order, OrderItem
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    order = serializers.PrimaryKeyRelatedField(read_only=True)
+    product = serializers.CharField(source="order.products.name", read_only=True)
     class Meta:
         model = OrderItem
         fields = [

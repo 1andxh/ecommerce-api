@@ -4,11 +4,6 @@ from products.models import Product
 import uuid
 
 
-# STATUS_CHOICES = [
-#     ("PENDING", "Pending"),
-#     ("CONFIRMED", "Confirmed"),
-#     ("CANCELLED", "Cancelled")
-# ]
 class Order(models.Model):
     class StatusChoices(models.TextChoices):
         PENDING = 'Pending'
@@ -20,7 +15,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=StatusChoices.choices, default=StatusChoices.PENDING)
-    products = models.ManyToManyField(Product, through="OrderItem", related_name='orders')
+    products = models.ManyToManyField(Product, through='OrderItem', related_name='orders')
 
 
     def __str__(self) -> str:
@@ -29,7 +24,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    # product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
 
     @property
@@ -38,6 +33,7 @@ class OrderItem(models.Model):
     
     def __str__(self) -> str:
         return f"{self.quantity} x {self.product.name} in Order {self.order.order_id}"
+
 
 
 
